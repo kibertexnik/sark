@@ -1,2 +1,4 @@
-# sakfe
- | Sokhibjon's ARM Kernel for Embedded
+# Sark
+Sokhibjon's ARM RaspberryPi Kernel
+
+> This project is highly experimental and maintained by @orzklv himslef.

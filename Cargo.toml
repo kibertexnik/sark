@@ -1,0 +1,20 @@
+[package]
+name = "sark"
+version = "0.1.0"
+authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
+edition = "2021"
+
+[profile.release]
+lto = true
+
+[features]
+default = []
+bsp_rpi3 = []
+bsp_rpi4 = []
+bsp_rpi5 = []
+
+[[bin]]
+name = "kernel"
+path = "src/main.rs"
+
+[dependencies]
