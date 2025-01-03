@@ -42,7 +42,7 @@ else ifeq ($(BSP),rpi5)
     TARGET            = aarch64-unknown-none-softfloat
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
-    QEMU_MACHINE_TYPE =
+    QEMU_MACHINE_TYPE = virt
     QEMU_RELEASE_ARGS = -d in_asm -display none
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
@@ -199,7 +199,6 @@ objdump: $(KERNEL_ELF)
 nm: $(KERNEL_ELF)
 	$(call color_header, "Launching nm")
 	@$(DOCKER_TOOLS) $(NM_BINARY) --demangle --print-size $(KERNEL_ELF) | sort | rustfilt
-
 
 ##------------------------------------------------------------------------------
 ## Testing targets

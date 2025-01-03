@@ -1,1 +1,1 @@
-DOCKER_IMAGE := rustembedded/osdev-utils:2021.12
+DOCKER_IMAGE := kibertexnik/sark-dev:2025.01

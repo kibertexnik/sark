@@ -40,6 +40,7 @@ in
 
       # Testing
       ruby
+      bundler
 
       # Embedded
       qemu
@@ -65,5 +66,8 @@ in
 
     shellHook = ''
       # Extra steps
+      bundle config set --local path '.vendor/bundle'
+      bundle config set --local without 'development'
+      bundle install
     '';
   }

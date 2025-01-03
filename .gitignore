@@ -22,3 +22,7 @@ target/
 
 # QEMU images
 kernel8.img
+
+# Ruby
+.bundle
+.vendor
