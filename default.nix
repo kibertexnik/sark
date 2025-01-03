@@ -5,6 +5,7 @@
   lib = pkgs.lib;
   getLibFolder = pkg: "${pkg}/lib";
   manifest = (pkgs.lib.importTOML ./Cargo.toml).package;
+  toolchain = fenix.packages.${pkgs.system}.complete.toolchain;
 in
   pkgs.rustPlatform.buildRustPackage {
     pname = "sark";
@@ -22,9 +23,7 @@ in
       llvmPackages.clang
 
       # Rust
-      rustc
-      cargo
-      clippy
+      toolchain
 
       # Embedded
       rustfilt

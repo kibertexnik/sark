@@ -20,6 +20,5 @@ target/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Added by cargo
-
-/target
+# QEMU images
+kernel8.img

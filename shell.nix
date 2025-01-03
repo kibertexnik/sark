@@ -3,6 +3,18 @@
   fenix ? import <fenix> {},
 }: let
   getLibFolder = pkg: "${pkg}/lib";
+
+  # Rust Toolchain
+  target = "aarch64-unknown-none-softfloat";
+  toolchain = with fenix.packages.${pkgs.system};
+    combine [
+      complete.rustc
+      complete.cargo
+      complete.clippy
+      complete.rust-analyzer
+      complete.llvm-tools-preview
+      targets.${target}.latest.rust-std
+    ];
 in
   pkgs.stdenv.mkDerivation {
     name = "sark-dev";
@@ -23,11 +35,11 @@ in
       alejandra
 
       # Rust
-      rustc
-      cargo
-      clippy
+      toolchain
       cargo-watch
-      rust-analyzer
+
+      # Testing
+      ruby
 
       # Embedded
       qemu
@@ -39,8 +51,12 @@ in
 
     # Set Environment Variables
     RUST_BACKTRACE = 1;
+    CARGO_BUILD_TARGET = target;
+    CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER = let
+      inherit (pkgs.pkgsCross.aarch64-multiplatform.stdenv) cc;
+    in "${cc}/bin/${cc.targetPrefix}cc";
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+    # RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.gcc
       pkgs.libiconv
