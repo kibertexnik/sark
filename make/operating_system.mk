@@ -1,7 +1,7 @@
 ifeq ($(shell uname -s),Linux)
     DU_ARGUMENTS = --block-size=1024 --apparent-size
 else ifeq ($(shell uname -s),Darwin)
-    DU_ARGUMENTS = -k -A
+    DU_ARGUMENTS = -k
 endif
 
 define disk_usage_KiB

@@ -2,12 +2,14 @@ include ./make/docker.mk
 include ./make/format.mk
 include ./make/operating_system.mk
 
+
+
 ##--------------------------------------------------------------------------------------------------
 ## Optional, user-provided configuration values
 ##--------------------------------------------------------------------------------------------------
 
 # Default to the RPi5.
-BSP ?= rpi4
+BSP ?= rpi3
 
 
 
@@ -21,6 +23,7 @@ ifeq ($(BSP),rpi3)
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = raspi3b
+    # QEMU_RELEASE_ARGS = -d in_asm -display none
     QEMU_RELEASE_ARGS = -serial stdio -display none
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
@@ -32,7 +35,8 @@ else ifeq ($(BSP),rpi4)
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = raspi4b
-    QEMU_RELEASE_ARGS = -serial stdio -display none
+    QEMU_RELEASE_ARGS = -d in_asm -display none
+    # QEMU_RELEASE_ARGS = -serial stdio -display none
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
     READELF_BINARY    = aarch64-none-elf-readelf
@@ -44,6 +48,7 @@ else ifeq ($(BSP),rpi5)
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = virt
     QEMU_RELEASE_ARGS = -d in_asm -display none
+    # QEMU_RELEASE_ARGS = -serial stdio -display none
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
     READELF_BINARY    = aarch64-none-elf-readelf

@@ -1,6 +1,6 @@
 // Rust embedded logo for `make doc`.
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/rust-embedded/wg/master/assets/logo/ewg-logo-blue-white-on-transparent.png"
+    html_logo_url = "https://avatars.githubusercontent.com/u/179522904?s=1000&v=4"
 )]
 
 //! The `kernel` binary.
