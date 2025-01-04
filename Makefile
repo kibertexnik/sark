@@ -12,6 +12,9 @@ BSP ?= rpi3
 # Show serial or assembly output
 SERIAL ?= true
 
+# Whether use docker or maintain nix env for building & running
+DOCKER ?= true
+
 ##--------------------------------------------------------------------------------------------------
 ## BSP-specific configuration values
 ##--------------------------------------------------------------------------------------------------
@@ -110,12 +113,11 @@ EXEC_TEST_DISPATCH = ruby ./make/tests/dispatch.rb
 ##------------------------------------------------------------------------------
 DOCKER_CMD            = docker run -t --rm -v $(shell pwd):/work/sark -w /work/sark
 DOCKER_CMD_INTERACT   = $(DOCKER_CMD) -i
-DOCKER_ARG_DIR_COMMON = -v $(shell pwd)/make:/work/sark/make
 
 # DOCKER_IMAGE defined in include file (see top of this file).
 DOCKER_QEMU  = $(DOCKER_CMD_INTERACT) $(DOCKER_IMAGE)
 DOCKER_TOOLS = $(DOCKER_CMD) $(DOCKER_IMAGE)
-DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_ARG_DIR_COMMON) $(DOCKER_IMAGE)
+DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_IMAGE)
 
 ##--------------------------------------------------------------------------------------------------
 ## Targets

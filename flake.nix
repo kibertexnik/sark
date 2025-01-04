@@ -37,7 +37,7 @@
         devShells.default = import ./shell.nix {inherit pkgs fenix;};
 
         # Output package
-        packages.default = pkgs.callPackage ./. {};
+        packages.default = pkgs.callPackage ./. {inherit pkgs fenix;};
       }
     );
 }
