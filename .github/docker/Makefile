@@ -1,13 +1,13 @@
 # Reference followed: https://www.docker.com/blog/getting-started-with-docker-for-arm-on-linux
 
-TAG := 2025.01
+TAG := main
 
 default: local
 
 local:
 	cp ../../Gemfile .
 	docker build                                           \
-	    --tag kibertexnik/sark-dev:$(TAG)              \
+	    --tag ghcr.io/kibertexnik/sark-dev:$(TAG)              \
 	    --build-arg VCS_REF=`git rev-parse --short HEAD` .
 	rm Gemfile
 
@@ -16,6 +16,6 @@ push:
 	docker buildx build                                    \
 	    --push                                             \
 	    --platform linux/arm64/v8,linux/amd64              \
-	    --tag kibertexnik/sark-dev:$(TAG)              \
+	    --tag ghcr.io/kibertexnik/sark-dev:$(TAG)              \
 	    --build-arg VCS_REF=`git rev-parse --short HEAD` .
 	rm Gemfile

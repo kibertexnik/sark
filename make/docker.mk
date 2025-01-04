@@ -1,1 +1,1 @@
-DOCKER_IMAGE := kibertexnik/sark-dev:2025.01
+DOCKER_IMAGE := ghcr.io/kibertexnik/sark-dev:main
