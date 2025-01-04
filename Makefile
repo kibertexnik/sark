@@ -1,6 +1,6 @@
-include ./make/docker.mk
-include ./make/format.mk
-include ./make/operating_system.mk
+include ./.github/make/docker.mk
+include ./.github/make/format.mk
+include ./.github/make/operating_system.mk
 
 ##--------------------------------------------------------------------------------------------------
 ## Optional, user-provided configuration values
@@ -106,7 +106,7 @@ OBJCOPY_CMD = rust-objcopy \
     -O binary
 
 EXEC_QEMU 				 = $(QEMU_BINARY) -M $(QEMU_MACHINE_TYPE)
-EXEC_TEST_DISPATCH = ruby ./make/tests/dispatch.rb
+EXEC_TEST_DISPATCH = ruby ./.github/make/tests/dispatch.rb
 
 ##------------------------------------------------------------------------------
 ## Dockerization
