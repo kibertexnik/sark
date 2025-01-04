@@ -1,7 +1,8 @@
+// Various doc properties
+// #![doc(html_root_url = "https://kibertexnik.github.io/sark/")]
+#![doc(issue_tracker_base_url = "https://github.com/kibertexnik/sark/issues/")]
 // Rust embedded logo for `make doc`.
-#![doc(
-    html_logo_url = "https://avatars.githubusercontent.com/u/179522904?s=1000&v=4"
-)]
+#![doc(html_logo_url = "https://avatars.githubusercontent.com/u/179522904?s=1000&v=4")]
 
 //! The `kernel` binary.
 //!
@@ -103,17 +104,15 @@
 
 // Exceptions for clippy
 #![allow(unused_imports)]
-
 // Enabled Features
 #![feature(format_args_nl)]
-
 // Single standing binary
 #![no_main]
 #![no_std]
 
 mod bsp;
-mod cpu;
 mod console;
+mod cpu;
 mod panic_wait;
 mod print;
 
@@ -123,7 +122,7 @@ mod print;
 ///
 /// - Only a single core must be active and running this function
 unsafe fn kernel_init() -> ! {
-  println!("Hello from Sark!");
+    println!("Hello from Sark!");
 
-  panic!("Stopping here.")
+    panic!("Stopping here.")
 }
