@@ -120,7 +120,7 @@ DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_ARG_DIR_COMMON) $(DOCKER_IMAGE)
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc doc-gh docker-image qemu docker-qemu clippy clean readelf objdump nm check
+.PHONY: all doc docker-image qemu docker-qemu clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -154,10 +154,6 @@ $(KERNEL_BIN): $(KERNEL_ELF)
 ## Generate the documentation
 ##------------------------------------------------------------------------------
 doc:
-	$(call color_header, "Generating docs")
-	@$(DOC_CMD) --document-private-items --extern-html-root-url "/"
-
-doc-gh:
 	$(call color_header, "Generating docs")
 	@$(DOC_CMD) --document-private-items --open
 

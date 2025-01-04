@@ -29,13 +29,13 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Build website
-        run: nix develop --command -- make doc-gh
+        run: nix develop --command -- make doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Add redirect
-        run: echo '<meta http-equiv="refresh" content="0;url=aoc/index.html">' > target/aarch64-unknown-none-softfloat/doc/kernel/index.html
+        run: echo '<meta http-equiv="refresh" content="0;url=/index.html">' > target/aarch64-unknown-none-softfloat/doc/kernel/index.html
 
       - name: Remove lock file
         run: rm target/aarch64-unknown-none-softfloat/doc/.lock
