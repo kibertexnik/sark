@@ -2,16 +2,16 @@
 
 TAG := 2025.01
 
-default: build_local
+default: local
 
-build_local:
+local:
 	cp ../../Gemfile .
 	docker build                                           \
 	    --tag kibertexnik/sark-dev:$(TAG)              \
 	    --build-arg VCS_REF=`git rev-parse --short HEAD` .
 	rm Gemfile
 
-buildx_push:
+push:
 	cp ../../Gemfile .
 	docker buildx build                                    \
 	    --push                                             \

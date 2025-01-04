@@ -120,7 +120,7 @@ DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_ARG_DIR_COMMON) $(DOCKER_IMAGE)
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc qemu docker-qemu clippy clean readelf objdump nm check
+.PHONY: all doc docker-image qemu docker-qemu clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -156,6 +156,18 @@ $(KERNEL_BIN): $(KERNEL_ELF)
 doc:
 	$(call color_header, "Generating docs")
 	@$(DOC_CMD) --document-private-items --open
+
+##------------------------------------------------------------------------------
+## Build the dev docker image locally (necessary for "docker-qemu")
+##------------------------------------------------------------------------------
+docker-image:
+	cd .github/docker && $(MAKE) local
+
+##------------------------------------------------------------------------------
+## Publish dev docker image to GitHub Container registry
+##------------------------------------------------------------------------------
+docker-publish:
+	cd .github/docker && $(MAKE) push
 
 ##------------------------------------------------------------------------------
 ## Run the kernel in QEMU

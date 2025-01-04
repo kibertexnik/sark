@@ -79,8 +79,7 @@ RUN set -ex;                                                                    
   rm -rf /var/lib/apt/lists/*
 
 # Locales
-RUN locale-gen en_US.UTF-8                                                                 \
-  sudo dpkg-reconfigure locales
+RUN locale-gen en_US.UTF-8
 
 ENV LANG=en_US.UTF-8                                                                       \
   LANGUAGE=en_US:en                                                                        \
