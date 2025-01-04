@@ -66,5 +66,8 @@ in
       bundle config set --local path 'target/.vendor/bundle'
       bundle config set --local without 'development'
       # bundle install
+
+      # Activate Zed configs
+      cp -R ./.github/zed ./.zed
     '';
   }
