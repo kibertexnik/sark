@@ -35,7 +35,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Add redirect (change later to /index.html when we move to subdomain)
-        run: echo '<meta http-equiv="refresh" content="0;url=/sark/index.html">' > target/aarch6 4-unknown-none-softfloat/doc/kernel/index.html
+        run: echo '<meta http-equiv="refresh" content="0;url=/sark/kernel/index.html">' > target/aarch6 4-unknown-none-softfloat/doc/index.html
 
       - name: Remove lock file
         run: rm target/aarch64-unknown-none-softfloat/doc/.lock
@@ -43,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./target/aarch64-unknown-none-softfloat/doc/kernel"
+          path: "./target/aarch64-unknown-none-softfloat/doc"
 
       - name: Deploy to GitHub Pages
         id: deployment
