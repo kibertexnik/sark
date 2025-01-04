@@ -1,4 +1,4 @@
-name: Deploy Documentation Website
+name: Deploy Documentation
 
 on:
   push:
@@ -29,7 +29,7 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Build website
-        run: nix-shell --run "make doc"
+        run: nix develop --command -- make doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
