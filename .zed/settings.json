@@ -6,8 +6,10 @@
   "lsp": {
     "rust-analyzer": {
       "cargo": {
+        "features": [
+          "all"
+        ],
         "target": "aarch64-unknown-none-softfloat",
-        "features": "all",
         "lens": {
           "run": false,
           "debug": false
@@ -15,13 +17,9 @@
         "checkOnSave": {
           "allTargets": false,
           "extraArgs": [
+            "--lib",
             "--bins"
           ]
-        }
-      },
-      "initialization_options": {
-        "check": {
-          "command": "clippy"
         }
       }
     }

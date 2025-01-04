@@ -2,8 +2,6 @@ include ./make/docker.mk
 include ./make/format.mk
 include ./make/operating_system.mk
 
-
-
 ##--------------------------------------------------------------------------------------------------
 ## Optional, user-provided configuration values
 ##--------------------------------------------------------------------------------------------------
@@ -11,7 +9,8 @@ include ./make/operating_system.mk
 # Default to the RPi5.
 BSP ?= rpi3
 
-
+# Show serial or assembly output
+SERIAL ?= true
 
 ##--------------------------------------------------------------------------------------------------
 ## BSP-specific configuration values
@@ -23,8 +22,11 @@ ifeq ($(BSP),rpi3)
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = raspi3b
-    # QEMU_RELEASE_ARGS = -d in_asm -display none
-    QEMU_RELEASE_ARGS = -serial stdio -display none
+    ifeq ($(SERIAL),true)
+    	QEMU_RELEASE_ARGS = -serial stdio -display none
+    else
+    	QEMU_RELEASE_ARGS = -d in_asm -display none
+    endif
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
     READELF_BINARY    = aarch64-none-elf-readelf
@@ -35,8 +37,11 @@ else ifeq ($(BSP),rpi4)
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = raspi4b
-    QEMU_RELEASE_ARGS = -d in_asm -display none
-    # QEMU_RELEASE_ARGS = -serial stdio -display none
+    ifeq ($(SERIAL),true)
+    	QEMU_RELEASE_ARGS = -serial stdio -display none
+    else
+    	QEMU_RELEASE_ARGS = -d in_asm -display none
+    endif
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
     READELF_BINARY    = aarch64-none-elf-readelf
@@ -47,8 +52,11 @@ else ifeq ($(BSP),rpi5)
     KERNEL_BIN        = kernel8.img
     QEMU_BINARY       = qemu-system-aarch64
     QEMU_MACHINE_TYPE = virt
-    QEMU_RELEASE_ARGS = -d in_asm -display none
-    # QEMU_RELEASE_ARGS = -serial stdio -display none
+    ifeq ($(SERIAL),true)
+    	QEMU_RELEASE_ARGS = -serial stdio -display none
+    else
+    	QEMU_RELEASE_ARGS = -d in_asm -display none
+    endif
     OBJDUMP_BINARY    = aarch64-none-elf-objdump
     NM_BINARY         = aarch64-none-elf-nm
     READELF_BINARY    = aarch64-none-elf-readelf
@@ -58,8 +66,6 @@ endif
 
 # Export for build.rs.
 export LD_SCRIPT_PATH
-
-
 
 ##--------------------------------------------------------------------------------------------------
 ## Targets and Prerequisites
@@ -72,8 +78,6 @@ KERNEL_ELF      = target/$(TARGET)/release/kernel
 # This parses cargo's dep-info file.
 # https://doc.rust-lang.org/cargo/guide/build-cache.html#dep-info-files
 KERNEL_ELF_DEPS = $(filter-out %: ,$(file < $(KERNEL_ELF).d)) $(KERNEL_MANIFEST) $(LAST_BUILD_CONFIG)
-
-
 
 ##--------------------------------------------------------------------------------------------------
 ## Command building blocks
@@ -113,11 +117,10 @@ DOCKER_QEMU  = $(DOCKER_CMD_INTERACT) $(DOCKER_IMAGE)
 DOCKER_TOOLS = $(DOCKER_CMD) $(DOCKER_IMAGE)
 DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_ARG_DIR_COMMON) $(DOCKER_IMAGE)
 
-
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc qemu clippy clean readelf objdump nm check
+.PHONY: all doc qemu docker-qemu clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -161,12 +164,18 @@ ifeq ($(QEMU_MACHINE_TYPE),) # QEMU is not supported for the board.
 
 qemu:
 	$(call color_header, "$(QEMU_MISSING_STRING)")
+docker-qemu:
+	$(call color_header, "$(QEMU_MISSING_STRING)")
 
 else # QEMU is supported.
 
 qemu: $(KERNEL_BIN)
 	$(call color_header, "Launching QEMU")
+	@$(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
+docker-qemu: $(KERNEL_BIN)
+	$(call color_header, "Launching QEMU")
 	@$(DOCKER_QEMU) $(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
+
 endif
 
 ##------------------------------------------------------------------------------

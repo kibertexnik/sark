@@ -1,4 +1,12 @@
 [toolchain]
-channel = "nightly-2025-01-02"
-components = ["rust-src", "llvm-tools-preview", "rustfmt"]
+channel = "nightly-2025-01-01"
+components = [
+  "rust-src",
+  "llvm-tools-preview",
+  "rustfmt",
+  "rust-analyzer",
+  "rust-std",
+  "clippy",
+  "miri",
+]
 targets = ["aarch64-unknown-none-softfloat"]

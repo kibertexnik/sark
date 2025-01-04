@@ -6,15 +6,10 @@
 
   # Rust Toolchain
   target = "aarch64-unknown-none-softfloat";
-  toolchain = with fenix.packages.${pkgs.system};
-    combine [
-      complete.rustc
-      complete.cargo
-      complete.clippy
-      complete.rust-analyzer
-      complete.llvm-tools-preview
-      targets.${target}.latest.rust-std
-    ];
+  toolchain = fenix.packages.${pkgs.system}.fromToolchainFile {
+    file = ./rust-toolchain.toml;
+    sha256 = "sha256-0Hcko7V5MUtH1RqrOyKQLg0ITjJjtyRPl2P+cJ1p1cY=";
+  };
 in
   pkgs.stdenv.mkDerivation {
     name = "sark-dev";
@@ -25,6 +20,7 @@ in
       cmake
       gnumake
       pkg-config
+      gcc-arm-embedded
       llvmPackages.llvm
       llvmPackages.clang
 
@@ -52,22 +48,23 @@ in
 
     # Set Environment Variables
     RUST_BACKTRACE = 1;
+    RUSTFLAGS = "-C target-cpu=cortex-a53 -C link-arg=--library-path=./src/bsp/raspberrypi -C link-arg=--script=kernel.ld -D warnings -D missing_docs";
     CARGO_BUILD_TARGET = target;
     CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER = let
       inherit (pkgs.pkgsCross.aarch64-multiplatform.stdenv) cc;
     in "${cc}/bin/${cc.targetPrefix}cc";
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
-    # RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
       pkgs.gcc
       pkgs.libiconv
+      pkgs.gcc-arm-embedded
       pkgs.llvmPackages.llvm
     ];
 
     shellHook = ''
       # Extra steps
-      bundle config set --local path '.vendor/bundle'
+      bundle config set --local path 'target/.vendor/bundle'
       bundle config set --local without 'development'
-      bundle install
+      # bundle install
     '';
   }
