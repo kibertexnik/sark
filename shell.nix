@@ -64,7 +64,8 @@ in
     shellHook = ''
       # Extra steps
       bundle config set --local path 'target/.vendor/bundle'
-      bundle config set --local without 'development'
+      bundle config set --local with 'development'
+      bundle config build.serialport -- --with-cflags=-Wno-int-conversion
       # bundle install
 
       # Activate Zed configs

@@ -3,6 +3,16 @@
 // For a full list of overridable settings, and general information on folder-specific settings,
 // see the documentation: https://zed.dev/docs/configuring-zed#settings-files
 {
+  "languages": {
+    "Ruby": {
+      "language_servers": [
+        "solargraph",
+        "!ruby-lsp",
+        "!rubocop",
+        "..."
+      ]
+    }
+  },
   "lsp": {
     "rust-analyzer": {
       "cargo": {
@@ -21,6 +31,12 @@
             "--bins"
           ]
         }
+      }
+    },
+    "solargraph": {
+      "initialization_options": {
+        "diagnostics": true,
+        "formatting": true
       }
     }
   }

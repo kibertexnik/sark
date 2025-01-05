@@ -11,5 +11,6 @@ group :uart do
 end
 
 group :development do
+    gem "solargraph", "~> 0.50.0"
     gem 'rubocop', '>= 1.38.0', require: false
 end
