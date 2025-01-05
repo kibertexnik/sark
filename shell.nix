@@ -63,12 +63,16 @@ in
 
     shellHook = ''
       # Extra steps
+
+      ## Setting up ruby bundler with exta configs
       bundle config set --local path 'target/.vendor/bundle'
       bundle config set --local with 'development'
       bundle config build.serialport -- --with-cflags=-Wno-int-conversion
-      # bundle install
 
-      # Activate Zed configs
+      ## Install all gems
+      bundle install
+
+      ## Activate Zed configs
       cp -R ./.github/zed ./.zed
     '';
   }
