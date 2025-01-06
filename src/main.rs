@@ -131,5 +131,4 @@ unsafe fn kernel_init() -> ! {
     println!("[2] Stopping here.");
 
     cpu::wait_forever()
-    // panic!("Stopping here.")
 }
