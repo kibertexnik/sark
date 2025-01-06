@@ -47,7 +47,7 @@ If you don't have Nix installed machine and you want to do everything imperative
 
 Make sure to have docker installed on your computer to be able to run development container which will help you to utilize ARM embedded tooling. Well, I'm not going to teach you how to install docker on your PC, you're free to google it. Just make sure it is installed and running on background. _I tried my best to create the dev env entirely on Nix, but imperative nature of [Arm LLC.](https://arm.com) won't let me do so._
 
-After the installation process, you need to decide whether will you build the devkit image from scratch (recommended if you have couple CPU cores biting dust in the corner) or fetch weekly built image from our registry.
+After the installation process, you need to decide whether will you build the devkit image from scratch (recommended if you have couple CPU cores biting dust in the corner) or fetch daily built image from our registry.
 
 If you decide to fetch pre-built image:
 
