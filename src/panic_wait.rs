@@ -20,41 +20,41 @@ use core::panic::PanicInfo;
 /// [`AtomicBool::load`]: core::sync::atomic::AtomicBool::load
 /// [`AtomicBool::store`]: core::sync::atomic::AtomicBool::store
 fn panic_prevent_reenter() {
-  use core::sync::atomic::{AtomicBool, Ordering};
+    use core::sync::atomic::{AtomicBool, Ordering};
 
-  #[cfg(not(target_arch = "aarch64"))]
-  compile_error!("Add the target_arch to above's check if the following code is safe to use");
+    #[cfg(not(target_arch = "aarch64"))]
+    compile_error!("Add the target_arch to above's check if the following code is safe to use");
 
-  static PANIC_IN_PROGRESS: AtomicBool = AtomicBool::new(false);
+    static PANIC_IN_PROGRESS: AtomicBool = AtomicBool::new(false);
 
-  if !PANIC_IN_PROGRESS.load(Ordering::Relaxed) {
-    PANIC_IN_PROGRESS.store(true, Ordering::Relaxed);
+    if !PANIC_IN_PROGRESS.load(Ordering::Relaxed) {
+        PANIC_IN_PROGRESS.store(true, Ordering::Relaxed);
 
-    return;
-  }
+        return;
+    }
 
-  cpu::wait_forever()
+    cpu::wait_forever()
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-  // Protect agains panic infinite loops if any of the following code panics itself.
-  panic_prevent_reenter();
+    // Protect agains panic infinite loops if any of the following code panics itself.
+    panic_prevent_reenter();
 
-  let (location, line, column) = match info.location() {
-    Some(loc) => (loc.file(), loc.line(), loc.column()),
-    _ => ("???", 0, 0)
-  };
+    let (location, line, column) = match info.location() {
+        Some(loc) => (loc.file(), loc.line(), loc.column()),
+        _ => ("???", 0, 0),
+    };
 
-  println!(
-    "Blazingly fast kernel panic!\n\n\
+    println!(
+        "Blazingly fast kernel panic!\n\n\
     Panic location:\n        File '{}', line {}, column {}\n\n\
     {}",
-    location,
-    line,
-    column,
-    info.message(),
-  );
+        location,
+        line,
+        column,
+        info.message(),
+    );
 
-  cpu::wait_forever()
+    cpu::wait_forever()
 }
