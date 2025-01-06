@@ -19,3 +19,6 @@ push:
 	    --tag ghcr.io/kibertexnik/sark-dev:$(TAG)              \
 	    --build-arg VCS_REF=`git rev-parse --short HEAD` .
 	rm Gemfile
+
+fetch:
+  docker pull ghcr.io/kibertexnik/sark-dev:main

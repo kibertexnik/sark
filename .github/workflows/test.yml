@@ -33,7 +33,7 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Run tests
-        run: nix develop --command -- make docker-image
+        run: nix develop --command -- make docker-fetch
 
       - name: Run tests
         run: nix develop --command -- make test

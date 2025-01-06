@@ -122,7 +122,7 @@ DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_IMAGE)
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc docker-image qemu docker-qemu clippy clean readelf objdump nm check
+.PHONY: all doc docker-image docker-fetch qemu docker-qemu clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -158,6 +158,12 @@ $(KERNEL_BIN): $(KERNEL_ELF)
 doc:
 	$(call color_header, "Generating docs")
 	@$(DOC_CMD) --document-private-items --open
+
+##------------------------------------------------------------------------------
+## Fetch the dev docker container (necessary for "docker-qemu")
+##------------------------------------------------------------------------------
+docker-image:
+	cd .github/docker && $(MAKE) fetch
 
 ##------------------------------------------------------------------------------
 ## Build the dev docker image locally (necessary for "docker-qemu")
