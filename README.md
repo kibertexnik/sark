@@ -41,11 +41,11 @@ If you have Nix package manager installed on your machine or your Linux distribu
 nix develop -c $SHELL
 ```
 
-If you don't have Nix installed machine and you want to do everything imperative way, just open [shell.nix:17-45](https://github.com/kibertexnik/sark/blob/26e0660725a2e88f877dea10f686150af737d08e/shell.nix#L17-L45) and install whatever inside this array. After doing so, you need to install nightly version of Rust programming language toolchain with the exact version stated in [rust-toolchain.toml](https://github.com/kibertexnik/sark/blob/main/rust-toolchain.toml). Also, don't forget to install target specific standard library "rust-src" & components as stated in toolchain file. I don't know what operating system you use, so you gotta figure out yourself how to get these installed, my responsibility ends at provoding full Nix & Docker dev container support.
+If you don't have Nix package manager installed machine and you want to do everything imperative way, just open [shell.nix:17-45](https://github.com/kibertexnik/sark/blob/26e0660725a2e88f877dea10f686150af737d08e/shell.nix#L17-L45) and install whatever software inside this array. After doing so, you need to install nightly version of Rust programming language toolchain with the exact version stated in [rust-toolchain.toml](https://github.com/kibertexnik/sark/blob/main/rust-toolchain.toml). Also, don't forget to install target specific standard library "rust-src" and components as stated in toolchain file. I don't know what operating system you do use, so you gotta figure out yourself how to get these installed, my responsibility ends at provoding full Nix & Docker dev container support.
 
 #### Docker / Development Image
 
-Make sure to have docker installed on your computer to be able to run development container which will help you to utilize ARM embedded tooling. Well, I'm not going to teach you how to install docker on your PC, you're free to google it. Just make sure it is installed and running on background. _I tried my best to create the dev env entirely on Nix, but imperative nature of [Arm LLC.](https://arm.com) won't let me do so._
+Make sure to have docker installed on your computer to be able to run development container which will help you to utilize ARM embedded tooling. Well, I'm not going to teach you how to install docker on your PC, you're free to google it. Just make sure it is installed and running on background. _I tried my best to create the dev env entirely on Nix, but imperative nature of [Arm LLC](https://arm.com) won't let me do so._
 
 After the installation process, you need to decide whether will you build the devkit image from scratch (recommended if you have couple CPU cores biting dust in the corner) or fetch daily built image from our registry.
 
@@ -58,7 +58,7 @@ docker pull ghcr.io/kibertexnik/sark-dev:main
 If you decide to build image locally from scratch:
 
 ```shell
-make docker-image
+cd ./.github/docker && make local
 ```
 
 ### Development Environment
