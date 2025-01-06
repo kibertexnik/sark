@@ -75,6 +75,7 @@ I wrote a huge ass Makefile to simplify environment & args settings. You can exe
 - `make clean` - Clean up compiled ojbects and binaries
 - `make readelf` - Parse and show ELF header metatags
 - `make objdump` - Explore binary's assembly instruction sets
+- `make doc` - Open developer documentation (mostly from author)
 - `make nm` - Explore binary's command sequence
 
 #### Makefile
@@ -84,6 +85,10 @@ There are few properties that can be set to change compilation behavior. Let's s
 - `BSP` - this property is used to specify the geneartion of raspberry's board to which compiler will compile for and emulate images on. [Refer to for more](https://github.com/kibertexnik/sark/blob/26e0660725a2e88f877dea10f686150af737d08e/Makefile#L23-L68)
 - `SERIAL` - specify whether the emulated environment should show assembly of running image or serial outputs. [Refer to for more](https://github.com/kibertexnik/sark/blob/26e0660725a2e88f877dea10f686150af737d08e/Makefile#L28-L32)
 - `DOCKER` - use only docker or nix environment in all commands. [WIP]
+
+#### Developer documentation
+
+There are also some developer/maintainer written documentation acrosos all codebases which can be accessed either by running `make doc` or opening [https://kibertexnik.github.io/sark](https://kibertexnik.github.io/sark/).
 
 ## License
 
