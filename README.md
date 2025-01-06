@@ -17,7 +17,8 @@ After attempting to strip down Linux kernel to remove any unnecessary driver & s
 motivation to write own kernel was born as a research & experiment done afterwork. The main purpose of the project is to attempt to ship embed
 software right into kernel itself, so it's native and booting kernel will run everything necessary.
 
-> This project is just an experiment and maintained by [@orzklv](https://github.com/orzklv) himself.
+> This project **doesn't accept PRs** as it's very immature and not well shaped yet.
+> This project is just an experiment conducted in [Kibertexnik](https://github.com/kibertexnik) and maintained by [@orzklv](https://github.com/orzklv) himself.
 
 ## Features
 
@@ -45,7 +46,7 @@ If you don't have Nix package manager installed machine and you want to do every
 
 #### Docker / Development Image
 
-Make sure to have docker installed on your computer to be able to run development container which will help you to utilize ARM embedded tooling. Well, I'm not going to teach you how to install docker on your PC, you're free to google it. Just make sure it is installed and running on background. _I tried my best to create the dev env entirely on Nix, but imperative nature of [Arm LLC](https://arm.com) won't let me do so._
+Make sure to have docker installed on your computer to be able to run development container which will help you to utilize ARM embedded tooling. Well, I'm not going to teach you how to install docker on your PC, you're free to google it. Just make sure it is installed and running on background. _I tried my best to create the dev env entirely on Nix, but imperative nature of [Arm LLC ](https://arm.com) won't let me do so._
 
 After the installation process, you need to decide whether will you build the devkit image from scratch (recommended if you have couple CPU cores biting dust in the corner) or fetch daily built image from our registry.
 
