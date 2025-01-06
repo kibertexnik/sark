@@ -89,7 +89,7 @@ There are few properties that can be set to change compilation behavior. Let's s
 
 #### Developer documentation
 
-There are also some developer/maintainer written documentation acrosos all codebases which can be accessed either by running `make doc` or opening [https://kibertexnik.github.io/sark](https://kibertexnik.github.io/sark/).
+There are also some developer/maintainer written documentation acrosos all codebases which can be accessed either by running `make doc` or opening [https://kibertexnik.github.io/sark](http://sark.kibertexnik.uz/).
 
 ## License
 
