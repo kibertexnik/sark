@@ -106,15 +106,19 @@
 #![allow(unused_imports)]
 // Enabled Features
 #![feature(format_args_nl)]
+#![feature(trait_alias)]
 // Single standing binary
 #![no_main]
 #![no_std]
+
+use console::console;
 
 mod bsp;
 mod console;
 mod cpu;
 mod panic_wait;
 mod print;
+mod synchronization;
 
 /// Early init code.
 ///
@@ -122,7 +126,10 @@ mod print;
 ///
 /// - Only a single core must be active and running this function
 unsafe fn kernel_init() -> ! {
-    println!("Hello from Sark!");
+    println!("[0] Hello from Sark!");
+    println!("[1] Chars written: {}", console().chars_written());
+    println!("[2] Stopping here.");
 
-    panic!("Stopping here.")
+    cpu::wait_forever()
+    // panic!("Stopping here.")
 }
