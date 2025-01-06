@@ -122,7 +122,7 @@ DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_IMAGE)
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc docker-image docker-fetch qemu docker-qemu clippy clean readelf objdump nm check
+.PHONY: all doc qemu clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -160,39 +160,16 @@ doc:
 	@$(DOC_CMD) --document-private-items --open
 
 ##------------------------------------------------------------------------------
-## Fetch the dev docker container (necessary for "docker-qemu")
-##------------------------------------------------------------------------------
-docker-fetch:
-	cd .github/docker && $(MAKE) fetch
-
-##------------------------------------------------------------------------------
-## Build the dev docker image locally (necessary for "docker-qemu")
-##------------------------------------------------------------------------------
-docker-image:
-	cd .github/docker && $(MAKE) local
-
-##------------------------------------------------------------------------------
-## Publish dev docker image to GitHub Container registry
-##------------------------------------------------------------------------------
-docker-publish:
-	cd .github/docker && $(MAKE) push
-
-##------------------------------------------------------------------------------
 ## Run the kernel in QEMU
 ##------------------------------------------------------------------------------
 ifeq ($(QEMU_MACHINE_TYPE),) # QEMU is not supported for the board.
 
 qemu:
 	$(call color_header, "$(QEMU_MISSING_STRING)")
-docker-qemu:
-	$(call color_header, "$(QEMU_MISSING_STRING)")
 
 else # QEMU is supported.
 
 qemu: $(KERNEL_BIN)
-	$(call color_header, "Launching QEMU")
-	@$(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
-docker-qemu: $(KERNEL_BIN)
 	$(call color_header, "Launching QEMU")
 	@$(DOCKER_QEMU) $(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
 
