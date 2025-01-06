@@ -38,7 +38,7 @@ jobs:
         run: cp ./target/aarch64-unknown-none-softfloat/doc/kernel/index.html ./target/aarch64-unknown-none-softfloat/doc/index.html
 
       - name: Add redirect (change later to /index.html when we move to subdomain)
-        run: echo '<meta http-equiv="refresh" content="0;url=/sark/kernel/index.html">' > target/aarch64-unknown-none-softfloat/doc/index.html
+        run: echo '<meta http-equiv="refresh" content="0;url=/kernel/">' > target/aarch64-unknown-none-softfloat/doc/index.html
 
       - name: Remove lock file
         run: rm target/aarch64-unknown-none-softfloat/doc/.lock

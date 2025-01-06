@@ -3,6 +3,11 @@ name = "sark"
 version = "0.1.0"
 authors = ["Sokhibjon Orzikulov <sakhib@orzklv.uz>"]
 edition = "2021"
+homepage = "https://sark.kibertexnik.uz"
+repository = "https://github.com/kibertexnik/sark"
+description = "Monolith kernel for Raspberry Pi"
+keywords = ["raspberry", "kernel"]
+license = "MIT OR Apache-2.0"
 
 [profile.release]
 lto = true

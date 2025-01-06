@@ -15,7 +15,7 @@
 in
   pkgs.rustPlatform.buildRustPackage {
     pname = "sark";
-    version = manifest.version;
+    version = manifest.package.version;
     cargoLock.lockFile = ./Cargo.lock;
     src = pkgs.lib.cleanSource ./.;
 
@@ -64,9 +64,9 @@ in
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
 
     meta = with lib; {
-      homepage = manifest.workspace.package.homepage;
-      description = "Sokhibjon's ARM RaspberryPi Kernel";
-      license = with lib.licenses; [asl20];
+      homepage = manifest.package.homepage;
+      description = manifest.package.description;
+      license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
 
       maintainers = [
