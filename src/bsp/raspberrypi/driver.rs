@@ -16,16 +16,16 @@ static GPIO: device_driver::GPIO = unsafe { device_driver::GPIO::new(mmio::GPIO_
 // Private Code
 //----------------------------------------------------------------------------
 
-/// This must be called only after successful init of UART driver.
+/// This must be called only after successful init of the UART driver.
 fn post_init_uart() -> Result<(), &'static str> {
     console::register_console(&PL011_UART);
 
     Ok(())
 }
 
+/// This must be called only after successful init of the GPIO driver.
 fn post_init_gpio() -> Result<(), &'static str> {
     GPIO.map_pl011_uart();
-
     Ok(())
 }
 

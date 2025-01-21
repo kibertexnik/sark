@@ -122,6 +122,7 @@ DOCKER_QEMU  = $(DOCKER_CMD_INTERACT) $(DOCKER_IMAGE)
 DOCKER_TOOLS = $(DOCKER_CMD) $(DOCKER_IMAGE)
 DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_IMAGE)
 
+# Dockerize commands, which require USB device passthrough, only on Linux.
 ifeq ($(shell uname -s),Linux)
 	DOCKER_CMD_DEV = $(DOCKER_CMD_INTERACT) $(DOCKER_ARG_DEV)
 
