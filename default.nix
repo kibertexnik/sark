@@ -1,6 +1,7 @@
 {
   pkgs ? import <nixpkgs> {},
   fenix ? import <fenix> {},
+  bsp ? "rpi3",
 }: let
   lib = pkgs.lib;
   getLibFolder = pkg: "${pkg}/lib";
@@ -15,7 +16,7 @@
 in
   pkgs.rustPlatform.buildRustPackage {
     pname = "sark";
-    version = manifest.package.version;
+    version = manifest.version;
     cargoLock.lockFile = ./Cargo.lock;
     src = pkgs.lib.cleanSource ./.;
 
@@ -63,9 +64,27 @@ in
     in "${cc}/bin/${cc.targetPrefix}cc";
     NIX_LDFLAGS = "-L${(getLibFolder pkgs.libiconv)}";
 
+    buildPhase = ''
+      # Compile the image targetting an rpi board
+      BSP="${bsp}" make
+    '';
+
+    checkPhase = ''
+      # Run makefile defined clippy
+      make clippy
+    '';
+
+    installPhase = ''
+      # Make sure out directory exists
+      mkdir -p $out/bin
+
+      # Copy the compiled image to output bin
+      cp ./kernel8.img $out/bin/kernel8_${bsp}.img
+    '';
+
     meta = with lib; {
-      homepage = manifest.package.homepage;
-      description = manifest.package.description;
+      homepage = manifest.homepage;
+      description = manifest.description;
       license = with lib.licenses; [asl20 mit];
       platforms = with platforms; linux ++ darwin;
 

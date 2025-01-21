@@ -7,7 +7,7 @@ include ./.github/make/operating_system.mk
 ##--------------------------------------------------------------------------------------------------
 
 # Default to the RPi5.
-BSP ?= rpi5
+BSP ?= rpi3
 
 # Show serial or assembly output (with serial interface appointed)
 SERIAL ?= true
