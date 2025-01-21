@@ -7,10 +7,11 @@ include ./.github/make/operating_system.mk
 ##--------------------------------------------------------------------------------------------------
 
 # Default to the RPi5.
-BSP ?= rpi3
+BSP ?= rpi5
 
-# Show serial or assembly output
+# Show serial or assembly output (with serial interface appointed)
 SERIAL ?= true
+DEV_SERIAL ?= /dev/ttyUSB0
 
 # Whether use docker or maintain nix env for building & running
 DOCKER ?= true
@@ -107,22 +108,30 @@ OBJCOPY_CMD = rust-objcopy \
 
 EXEC_QEMU 				 = $(QEMU_BINARY) -M $(QEMU_MACHINE_TYPE)
 EXEC_TEST_DISPATCH = ruby ./.github/make/tests/dispatch.rb
+EXEC_MINITERM			 = ruby ./.github/serial/miniterm.rb
 
 ##------------------------------------------------------------------------------
 ## Dockerization
 ##------------------------------------------------------------------------------
 DOCKER_CMD            = docker run -t --rm -v $(shell pwd):/work/sark -w /work/sark
 DOCKER_CMD_INTERACT   = $(DOCKER_CMD) -i
+DOCKER_ARG_DEV				= --privileged -v /dev:/dev
 
 # DOCKER_IMAGE defined in include file (see top of this file).
 DOCKER_QEMU  = $(DOCKER_CMD_INTERACT) $(DOCKER_IMAGE)
 DOCKER_TOOLS = $(DOCKER_CMD) $(DOCKER_IMAGE)
 DOCKER_TEST  = $(DOCKER_CMD) $(DOCKER_IMAGE)
 
+ifeq ($(shell uname -s),Linux)
+	DOCKER_CMD_DEV = $(DOCKER_CMD_INTERACT) $(DOCKER_ARG_DEV)
+
+	DOCKER_MINITERM = $(DOCKER_CMD_DEV) $(DOCKER_IMAGE)
+endif
+
 ##--------------------------------------------------------------------------------------------------
 ## Targets
 ##--------------------------------------------------------------------------------------------------
-.PHONY: all doc qemu clippy clean readelf objdump nm check
+.PHONY: all doc qemu miniterm clippy clean readelf objdump nm check
 
 all: $(KERNEL_BIN)
 
@@ -174,6 +183,12 @@ qemu: $(KERNEL_BIN)
 	@$(DOCKER_QEMU) $(EXEC_QEMU) $(QEMU_RELEASE_ARGS) -kernel $(KERNEL_BIN)
 
 endif
+
+##------------------------------------------------------------------------------
+## Connect to the target's serial
+##------------------------------------------------------------------------------
+miniterm:
+	@$(DOCKER_MINITERM) $(EXEC_MINITERM) $(DEV_SERIAL)
 
 ##------------------------------------------------------------------------------
 ## Run clippy

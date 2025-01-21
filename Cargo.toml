@@ -13,20 +13,22 @@ license = "MIT OR Apache-2.0"
 lto = true
 
 [features]
-default = ["all"]
-bsp_rpi3 = []
-bsp_rpi4 = []
-bsp_rpi5 = []
+# default = ["all"]
+bsp_rpi3 = ["dep:tock-registers"]
+bsp_rpi4 = ["dep:tock-registers"]
+bsp_rpi5 = ["dep:tock-registers"]
 all = ["bsp_rpi3", "bsp_rpi4", "bsp_rpi5"]
 
 [[bin]]
 name = "kernel"
 path = "src/main.rs"
-test = false
-doctest = false
-bench = false
 
 [dependencies]
+
+# Optional dependencies
+tock-registers = { version = "0.9", default-features = false, features = [
+  "register_types",
+], optional = true }
 
 # Platform specific dependencies
 [target.'cfg(target_arch = "aarch64")'.dependencies]

@@ -1,9 +1,8 @@
-//! Conditional reexporting of Board Support Packages
-
-mod device_driver;
+//! Device driver.
 
 #[cfg(any(feature = "bsp_rpi3", feature = "bsp_rpi4", feature = "bsp_rpi5"))]
-mod raspberrypi;
+mod bcm;
+mod common;
 
 #[cfg(any(feature = "bsp_rpi3", feature = "bsp_rpi4", feature = "bsp_rpi5"))]
-pub use raspberrypi::*;
+pub use bcm::*;
